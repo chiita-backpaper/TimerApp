@@ -5,6 +5,10 @@
 //  Created by Taichi Uragami on R 3/03/28.
 //
 
+//  追加すると良さそうな機能
+//  ・アラーム機能
+//  ・秒数まで指定できるように
+
 import Foundation
 import SwiftUI
 
@@ -13,6 +17,12 @@ class TimerManager: ObservableObject{
     @Published var timerMode: TimerMode = .initial
     
     @Published var secondsLeft = UserDefaults.standard.integer(forKey: "timerLength")
+    
+    
+//  Timer
+//  scheduledTimer(): create timer
+//  invalidate(): finish timer
+//  fire(): call the timer at any time
     
     var timer = Timer()
     
@@ -25,18 +35,19 @@ class TimerManager: ObservableObject{
     func start() {
         timerMode = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {timer in
+            self.secondsLeft -= 1
+            
             if self.secondsLeft == 0 {
                 self.timerMode = .initial
-                self.secondsLeft = 60
+//              self.secondsLeft = 60
                 timer.invalidate()
             }
-            self.secondsLeft -= 1
         })
     }
     
     func reset() {
         self.timerMode = .initial
-        self.secondsLeft = 60
+        self.secondsLeft = 0
         timer.invalidate()
     }
     

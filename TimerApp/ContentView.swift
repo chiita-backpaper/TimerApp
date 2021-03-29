@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ContentView: View {
     @ObservedObject var timerManager = TimerManager()
     
@@ -21,7 +19,7 @@ struct ContentView: View {
         NavigationView{
             VStack{
                 Text(secondsToMinutesAndSeconds(seconds: timerManager.secondsLeft))
-                    .font(.system(size: 80))
+                    .font(.system(size: 60, design: .monospaced))
                     .padding(.top, 80)
                 Image(systemName: timerManager.timerMode == .running ? "pause.circle.fill" : "play.circle.fill")
                     .resizable()
