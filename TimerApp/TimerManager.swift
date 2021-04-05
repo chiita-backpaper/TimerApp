@@ -26,10 +26,10 @@ class TimerManager: ObservableObject{
     
     var timer = Timer()
     
-    func setTimerLength(minutes: Int){
+    func setTimerLength(time: Int){
         let defaults = UserDefaults.standard
-        defaults.set(minutes, forKey: "timerLength")
-        secondsLeft = minutes
+        defaults.set(time, forKey: "timerLength")
+        secondsLeft = time
     }
     
     func start() {
