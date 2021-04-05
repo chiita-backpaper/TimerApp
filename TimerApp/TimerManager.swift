@@ -18,6 +18,8 @@ class TimerManager: ObservableObject{
     
     @Published var secondsLeft = UserDefaults.standard.integer(forKey: "timerLength")
     
+    var lastSetSecond = UserDefaults.standard.integer(forKey: "timerLength")
+    
     
 //  Timer
 //  scheduledTimer(): create timer
@@ -27,21 +29,21 @@ class TimerManager: ObservableObject{
     var timer = Timer()
     
     func setTimerLength(time: Int){
-        let defaults = UserDefaults.standard
-        defaults.set(time, forKey: "timerLength")
+        UserDefaults.standard.set(time, forKey: "timerLength")
         secondsLeft = time
     }
     
     func start() {
         timerMode = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {timer in
-            self.secondsLeft -= 1
-            
             if self.secondsLeft == 0 {
                 self.timerMode = .initial
-//              self.secondsLeft = 60
+                self.secondsLeft += 1
                 timer.invalidate()
             }
+            
+            self.secondsLeft -= 1
+            
         })
     }
     
@@ -57,3 +59,4 @@ class TimerManager: ObservableObject{
     }
     
 }
+
